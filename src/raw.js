@@ -2,9 +2,7 @@ console.log("raw.js starts. >>>>>>>>");
 
 import * as THREE from "three";
 import Stats from "three/addons/libs/stats.module.js";
-import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls";
-import { SDFGeometryGenerator } from 'three/addons/geometries/SDFGeometryGenerator.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
@@ -38,7 +36,7 @@ import normals from 'https://cdn.jsdelivr.net/npm/angle-normals@1.0.0/+esm'
                 appendSpheres(buffer)
             })
 
-            d3.csv('/asset/montage/sensor.csv').then((sensors) => {
+            d3.csv('asset/montage/sensor.csv').then((sensors) => {
                 sensors.map(sensor => {
                     Object.assign(sensor, { color: '#ffffff', x: meter2centimeter(sensor.x), y: meter2centimeter(sensor.z), z: meter2centimeter(sensor.y) })
                 })
