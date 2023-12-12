@@ -15,7 +15,7 @@ console.log(mlMatrix)
 
 
 {
-    let colormap = d3.interpolateRdBu,
+    let colormap = d3.interpolateGnBu,
         noise4D = createNoise4D(),
         { Matrix } = mlMatrix;
 
@@ -96,7 +96,7 @@ console.log(mlMatrix)
      * Append spheres to the scene based on the buffer.
      * @param {Array} buffer The buffer of {name, color, x, y, z}
      */
-    let appendSpheres = (buffer, size = 0.1, opacity = 0.8, transparent = true, flatShading = true) => {
+    let appendSpheres = (buffer, size = 0.1, opacity = 1.0, transparent = true, flatShading = true) => {
 
         let geometry, material, mesh;
         let meshes = buffer.map(({ name, color, x, y, z }) => {
@@ -125,7 +125,7 @@ console.log(mlMatrix)
                 size: 0.5,
                 height: 0.1,
             }),
-                material = new THREE.MeshPhongMaterial({ color, opacity: 0.3, transparent: true }),
+                material = new THREE.MeshPhongMaterial({ color, opacity: 0.1, transparent: true }),
                 mesh = new THREE.Mesh(geometry, material);
 
             Object.assign(mesh.position, { x, y, z })
@@ -255,7 +255,7 @@ console.log(mlMatrix)
         {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x001b42);
-            scene.add(cube);
+            // scene.add(cube);
 
             let color = 0xffffff,
                 intensity = 1,
@@ -266,7 +266,7 @@ console.log(mlMatrix)
                 divisions = 2,
                 helper = new THREE.GridHelper(size, divisions, 0xa4cab6, 0x7a7374);
             helper.position.y = -10;
-            scene.add(helper);
+            // scene.add(helper);
 
         }
     }
