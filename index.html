@@ -16,8 +16,17 @@
     <script src="https://cdn.jsdelivr.net/npm/ml-matrix@6.10.8/matrix.umd.min.js"></script>
 </head>
 
-<body>
-    <div id="brain-container" style="padding: 20px; width: 600px; height: 600px"></div>
+<body style="display: inline-flex">
+    <div id="brain-container" style="margin: 20px; padding: 20px; width: 600px; height: 600px"></div>
+
+    <div id="eeg-geometry-container" style="margin: 20px; padding: 20px; width: 600px; height: 600px">
+        <div></div>
+    </div>
+
+    <div id="eeg-signal-container" style="margin: 20px; padding: 20px; width: 600px; height: 600px">
+        <div></div>
+    </div>
+
     <script type="module" src="src/raw.js"></script>
 </body>
 
