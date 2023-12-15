@@ -175,7 +175,6 @@ let main = (cells, vertices) => {
         renderer.render(scene, camera)
     }
 
-    let drawGeometryFlag = performance.now() + 0.1;
 
     let animate = () => {
         cube.rotation.z += 0.01;
@@ -213,10 +212,11 @@ let main = (cells, vertices) => {
                     node.material.opacity = Math.abs(v);
                 })
 
-                if (now > drawGeometryFlag) {
-                    plotSensorsGeometry(eegGeometrySensors)
-                    drawGeometryFlag = now + 200; // + 200 milliseconds
-                }
+                // if (now > drawGeometryFlag) {
+                //     plotSensorsGeometry(eegGeometrySensors)
+                //     drawGeometryFlag = now + 200; // + 200 milliseconds
+                // }
+
                 // return
             }
         }
@@ -228,7 +228,20 @@ let main = (cells, vertices) => {
         requestAnimationFrame(animate)
     }
 
+    let drawGeometryFlag = performance.now() + 0.1;
+    let animate1 = () => {
+        let now = performance.now()
+
+        if (now > drawGeometryFlag && eegGeometrySensors) {
+            plotSensorsGeometry(eegGeometrySensors)
+            drawGeometryFlag = now + 500; // + 200 milliseconds
+        }
+
+        requestAnimationFrame(animate1)
+    }
+
     animate()
+    animate1()
 
     window.addEventListener("resize", onWindowResize);
     onWindowResize();
@@ -397,7 +410,7 @@ let mkGeometry = (vertices) => {
 }
 
 let plotSensorsGeometry = (sensors) => {
-    console.log(sensors)
+    // console.log(sensors)
 
     let plt1, plt2,
         d2x = (d) => d.theta * Math.cos(d.phi),
