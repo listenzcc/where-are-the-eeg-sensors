@@ -136,13 +136,13 @@ let appendSpheres = (buffer, size = 0.1, opacity = 1.0, transparent = true, flat
 
 let appendTexts = (buffer, font) => {
     let geometry, material, mesh;
-    texts = buffer.map(({ name, color, x, y, z }) => {
+    texts = buffer.map(({ name, color, x, y, z }, i) => {
         geometry = new TextGeometry(name, {
             font,
-            size: 0.5,
+            size: 0.6,
             height: 0.1,
         }),
-            material = new THREE.MeshPhongMaterial({ color, opacity: 0.5, transparent: true }),
+            material = new THREE.MeshPhongMaterial({ color: d3.schemeCategory10[i % 10], opacity: 0.9, transparent: true }),
             mesh = new THREE.Mesh(geometry, material);
 
         Object.assign(mesh.position, { x, y, z })
@@ -234,7 +234,7 @@ let main = (cells, vertices) => {
 
         if (now > drawGeometryFlag && eegGeometrySensors) {
             plotSensorsGeometry(eegGeometrySensors)
-            drawGeometryFlag = now + 500; // + 200 milliseconds
+            drawGeometryFlag = now + 100; // + 200 milliseconds
         }
 
         requestAnimationFrame(animate1)
@@ -423,7 +423,7 @@ let plotSensorsGeometry = (sensors) => {
         color: { nice: true, legend: true, scheme: 'RdBu', reverse: true },
         aspectRatio: 1.0,
         marks: [
-            Plot.contour(sensors, { x: d2x, y: d2y, fill: 'v', blur: 4, interval: 0.5, opacity: 0.5 }),
+            Plot.contour(sensors, { x: d2x, y: d2y, fill: 'v', blur: 4, interval: 0.3, opacity: 0.5 }),
             Plot.dot(sensors, { x: d2x, y: d2y, fill: 'white' }),
             Plot.text(sensors, { x: d2x, y: d2y, fill: 'white', text: 'name', fontSize: 15, dx: 10, dy: 10 }),
         ],
