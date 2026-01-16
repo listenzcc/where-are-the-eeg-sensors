@@ -1,9 +1,37 @@
-import * as THREE from "three";
-import Stats from "three/addons/libs/stats.module.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls";
+console.log('Start raw.js')
+
+/**
+ * Loading ESM with method 1.
+
+ * The THREE is imports by the importmap in the HTML file.
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+        }
+    }
+    </script>
+
+ * Or import them with these
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js';
+    import Stats from 'https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/libs/stats.module.js';
+    import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/controls/OrbitControls.js';
+    import { TextGeometry } from 'https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/geometries/TextGeometry.js';
+    import { FontLoader } from 'https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/loaders/FontLoader.js';
+ */
+
+import * as THREE from 'three'
+import Stats from 'three/addons/libs/stats.module.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
+console.log(THREE)
+
+/**
+ * The other loading ESM method.
+ */
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.8.5/+esm'
 import normals from 'https://cdn.jsdelivr.net/npm/angle-normals@1.0.0/+esm'
 import { createNoise4D } from 'https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1/+esm'
@@ -248,8 +276,9 @@ let main = (cells, vertices) => {
 }
 
 let getContainerSize = () => {
+    // Make it square.
     const w = brainContainer.clientWidth,
-        h = brainContainer.clientHeight;
+        h = brainContainer.clientWidth;
     return { w, h }
 }
 
@@ -419,6 +448,7 @@ let plotSensorsGeometry = (sensors) => {
     plt1 = Plot.plot({
         x: { nice: true },
         y: { nice: true },
+        height: 600,
         grid: true,
         color: { nice: true, legend: true, scheme: 'RdBu', reverse: true },
         aspectRatio: 1.0,
@@ -432,6 +462,7 @@ let plotSensorsGeometry = (sensors) => {
     plt2 = Plot.plot({
         // x: { nice: true },
         y: { nice: true },
+        height: 600,
         grid: true,
         color: { nice: true },
         marks: sensors.map((sensor, offset) => {
@@ -440,10 +471,25 @@ let plotSensorsGeometry = (sensors) => {
         )
     })
 
-    eegGeometryContainer.replaceChild(plt1, eegGeometryContainer.firstChild)
-    eegSignalContainer.replaceChild(plt2, eegSignalContainer.firstChild)
+    // eegGeometryContainer.replaceChild(plt1, eegGeometryContainer.firstChild)
+    // eegSignalContainer.replaceChild(plt2, eegSignalContainer.firstChild)
 
     // brainGeometryContainer.innerHTML = ''
     // brainGeometryContainer.appendChild(plt)
+    // 使用文档片段减少重绘
+    const fragment1 = document.createDocumentFragment();
+    const fragment2 = document.createDocumentFragment();
+
+    fragment1.appendChild(plt1);
+    fragment2.appendChild(plt2);
+
+    let div1 = eegGeometryContainer.getElementsByTagName('div')[0],
+        div2 = eegSignalContainer.getElementsByTagName('div')[0];
+
+    div1.innerHTML = '';
+    div2.innerHTML = '';
+
+    div1.appendChild(fragment1);
+    div2.appendChild(fragment2);
 }
 

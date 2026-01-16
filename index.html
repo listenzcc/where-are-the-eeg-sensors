@@ -2,32 +2,58 @@
 <html>
 
 <head>
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/ml-matrix@6.10.8/matrix.umd.min.js"></script>
 
     <script type="importmap">
     {
         "imports": {
-        "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
         }
     }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/ml-matrix@6.10.8/matrix.umd.min.js"></script>
+    <style>
+        body {
+            text-align: -webkit-center;
+            width: 1200px;
+            margin: auto;
+        }
+    </style>
 </head>
 
-<body style="display: inline-flex">
-    <div id="brain-container" style="margin: 20px; padding: 20px; width: 600px; height: 600px"></div>
+<body>
+    <h1>Display EEG Sensors in 3D</h1>
 
-    <div id="eeg-geometry-container" style="margin: 0px; padding: 20px; width: 600px; height: 600px">
-        <div></div>
+    <div>
+        <h2>Brain Container</h2>
+        <div id="brain-container" style="width: 600px"> </div>
     </div>
 
-    <div id="eeg-signal-container" style="margin: 0px; padding: 20px; width: 600px; height: 600px">
-        <div></div>
+    <div style="display: flex">
+        <div id="eeg-geometry-container" style="width: 600px; height: 600px">
+            <h2>EEG Geometry Container</h2>
+            <div></div>
+        </div>
+
+        <div id="eeg-signal-container" style="width: 600px; height: 600px">
+            <h2>EEG Signal Container</h2>
+            <div></div>
+        </div>
     </div>
 
-    <script type="module" src="src/raw.js"></script>
+    <!-- <script type="module">
+        import * as THREE from "three";
+        import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+        import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+        import { FontLoader } from "three/addons/loaders/FontLoader.js";
+
+        // Your code here
+        console.log('All imports working!');
+    </script> -->
+
+    <script type="module" src="/src/raw.js"></script>
 </body>
 
 </html>
